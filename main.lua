@@ -2,6 +2,7 @@
 -- Require --
 -------------
 
+require("track")
 require("car")
 
 ---------------
@@ -11,7 +12,11 @@ require("car")
 -- Main Callbacks
 
 love.load = function()
-    car.load()
+    love.physics.setMeter(64)
+    world = love.physics.newWorld(0,0,true)
+
+    track.load(world)
+    car.load(world)
 end
 
 love.update = function(dt)
@@ -19,6 +24,7 @@ love.update = function(dt)
 end
 
 love.draw = function()
+    track.draw()
     car.draw()
 end
 
