@@ -12,7 +12,7 @@ load = function(world)
     walls = {}
     walls[1] = {}
     walls[1].body = lp.newBody(world,0,0,"static")
-    walls[1].shape = lp.newChainShape(true, 50,50, 200,50, 200,200, 50,200)
+    walls[1].shape = lp.newChainShape(true, 50,50, 500,50, 500,300, 50,300)
     walls[1].fixture = lp.newFixture(walls[1].body,walls[1].shape)
 end
 

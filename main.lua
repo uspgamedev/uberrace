@@ -13,13 +13,14 @@ require("car")
 
 love.load = function()
     love.physics.setMeter(64)
-    world = love.physics.newWorld(0,0,true)
+    world = love.physics.newWorld(0,0,false)
 
     track.load(world)
     car.load(world)
 end
 
 love.update = function(dt)
+    world:update(dt)
     car.update(dt)
 end
 
