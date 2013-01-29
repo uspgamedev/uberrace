@@ -23,11 +23,16 @@ local brake = false
 local turn = 0
 
 load = function(world)
+    myball = {}
+    myball.body = lp.newBody(world,450,442,"dynamic")
+    myball.shape = lp.newCircleShape(17)
+    myball.fixture = lp.newFixture(myball.body,myball.shape,2)
     mycar = {}
     mycar.body = lp.newBody(world,450,450,"dynamic")
     mycar.shape = lp.newPolygonShape(10,20,-10,20,-10,-20,10,-20)
-    mycar.fixture = lp.newFixture(mycar.body,mycar.shape,5)
-    mycar.body:setAngularDamping(10)
+    mycar.fixture = lp.newFixture(mycar.body,mycar.shape,2)
+    joint = lp.newWeldJoint(mycar.body,myball.body,450,450)
+    --mycar.body:setAngularDamping(10)
 end
 
 -- update
@@ -63,7 +68,7 @@ update = function()
 
     if accelerate ~= 0 then
         local accel = vm.new(frame_front.x, frame_front.y)
-        accel:scale(600*accelerate)
+        accel:scale(1200*accelerate)
         mycar.body:applyForce(accel.x, accel.y)
     end
 
@@ -78,7 +83,7 @@ update = function()
     end
 
     if turn ~= 0 then
-        mycar.body:applyTorque(turn*22000*v)
+        mycar.body:applyTorque(turn*6000*v)
     end
 
 
@@ -86,7 +91,7 @@ update = function()
 
     if brake then
        local brake_force = vm.new(vel_front.x, vel_front.y)
-       brake_force:scale(-0.9)
+       brake_force:scale(-2)
        mycar.body:applyForce(brake_force.x,brake_force.y)
     end
 
@@ -149,6 +154,9 @@ end
 
 draw = function()
     lg.polygon("fill", mycar.body:getWorldPoints(mycar.shape:getPoints()))
+    local center = {}
+    center.x, center.y = myball.body:getWorldCenter()
+    lg.circle("line", center.x, center.y, myball.shape:getRadius())
 end
     
 
