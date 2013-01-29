@@ -19,14 +19,14 @@ module("car",package.seeall) do
 local mycar = nil
 
 local accelerate = 0
-local brake = 0
+local brake = false
 local turn = 0
 
 load = function(world)
     mycar = {}
     mycar.body = lp.newBody(world,450,450,"dynamic")
-    mycar.shape = lp.newPolygonShape( 15, 30,-15, 30, 0,-30)
-    mycar.fixture = lp.newFixture(mycar.body,mycar.shape,1)
+    mycar.shape = lp.newPolygonShape(10,20,-10,20,-10,-20,10,-20)
+    mycar.fixture = lp.newFixture(mycar.body,mycar.shape,5)
     mycar.body:setAngularDamping(10)
 end
 
@@ -67,6 +67,7 @@ update = function()
         mycar.body:applyForce(accel.x, accel.y)
     end
 
+
     -- turn the car
 
     local v = vel_front:norm2_squared()
@@ -77,7 +78,16 @@ update = function()
     end
 
     if turn ~= 0 then
-        mycar.body:applyTorque(turn*12000*v)
+        mycar.body:applyTorque(turn*22000*v)
+    end
+
+
+    -- brake the car
+
+    if brake then
+       local brake_force = vm.new(vel_front.x, vel_front.y)
+       brake_force:scale(-0.9)
+       mycar.body:applyForce(brake_force.x,brake_force.y)
     end
 
     -- kill lateral momentum
@@ -118,6 +128,9 @@ keypressed = function(key,unicode)
     if key == "right" then
         turn = 1
     end
+    if key == " " then
+        brake = true
+    end
 end
 
 keyreleased = function(key,unicode)
@@ -126,6 +139,9 @@ keyreleased = function(key,unicode)
     end
     if key == "left" or key == "right" then
         turn = 0
+    end
+    if key == " " then
+        brake = false
     end
 end
 
