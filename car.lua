@@ -9,7 +9,10 @@ require("love.physics")
 local lp = love.physics
 
 
-module("car") do
+require("vector")
+local vm = vector.meta
+
+module("car",package.seeall) do
 
 -- load
 
@@ -17,48 +20,86 @@ local mycar = nil
 
 local accelerate = 0
 local brake = 0
-local turnLeft = 0
-local turnRight = 0
+local turn = 0
 
 load = function(world)
     mycar = {}
-    mycar.body = lp.newBody(world,150,150,"dynamic")
-    mycar.shape = lp.newPolygonShape(0,-15, 0,15, 60,0)
+    mycar.body = lp.newBody(world,450,450,"dynamic")
+    mycar.shape = lp.newPolygonShape( 15, 30,-15, 30, 0,-30)
     mycar.fixture = lp.newFixture(mycar.body,mycar.shape,1)
+    mycar.body:setAngularDamping(10)
 end
 
 -- update
 
-rotateVec = function(ang,x,y)
-    return math.cos(ang)*x - math.sin(ang)*y, math.sin(ang)*x + math.cos(ang)*y
-end
-
 update = function()
-    local ang = mycar.body:getAngle()
-    local vel_x = 0
-    local vel_y = 0
-    vel_x, vel_y = mycar.body:getLinearVelocity()
-    local vel_front = 0
-    local vel_drift = 0
-    vel_front, vel_drift = rotateVec(-ang,vel_x,vel_y)
+    -- know the car
+   
+    local nright = { x = 1 , y = 0 }
+    local nup = { x = 0 , y = -1 }
+    setmetatable(nright,vm)
+    setmetatable(nup,vm)
 
-    local friction_front = -vel_front*0.05
-    if accelerate == -1 and vel_front > 0.5 then
-        friction_front = -vel_front*0.5
+    local vel_linear = { x = 0, y = 0 }
+    setmetatable(vel_linear,vm)
+    vel_linear.x, vel_linear.y = mycar.body:getLinearVelocity()
+
+    local vel_front = { x = 0, y = 0 }
+    local vel_lateral = { x = 0, y = 0}
+    setmetatable(vel_front,vm)
+    setmetatable(vel_lateral,vm)
+
+    vel_front.x, vel_front.y = mycar.body:getWorldVector(nup.x,nup.y)
+    vel_lateral.x, vel_lateral.y = mycar.body:getWorldVector(nright.x,nright.y)
+
+    local frame_front = vm.new(vel_front.x, vel_front.y)
+    local frame_lateral = vm.new(vel_lateral.x, vel_lateral.y)
+
+    vel_front:scale(vel_front:dot(vel_linear))
+    vel_lateral:scale(vel_lateral:dot(vel_linear))
+
+
+    -- move the car
+
+    if accelerate ~= 0 then
+        local accel = vm.new(frame_front.x, frame_front.y)
+        accel:scale(600*accelerate)
+        mycar.body:applyForce(accel.x, accel.y)
     end
 
-    local friction_drift = -vel_drift*0.5
-    friction_front, friction_drift = rotateVec(ang,friction_front,friction_drift)
+    -- turn the car
 
-    mycar.body:applyForce(friction_front,friction_drift)
-    
-    if accelerate == 1 then
-        mycar.body:applyForce(math.cos(ang)*200,math.sin(ang)*200)
-    elseif accelerate == -1 and vel_front <= 0.5 then
-        mycar.body:applyForce(-math.cos(ang)*100,-math.sin(ang)*100)
+    local v = vel_front:norm2_squared()
+    if v <= 2500 then
+        v = v/2500
+    else
+        v = 1
     end
+
     if turn ~= 0 then
+        mycar.body:applyTorque(turn*12000*v)
     end
+
+    -- kill lateral momentum
+
+    local lateral_kill_impulse = vel_lateral
+    setmetatable(lateral_kill_impulse,vm)
+    lateral_kill_impulse:scale(-1 * mycar.body:getMass())
+    v = lateral_kill_impulse:norm2_squared()
+    if v > 100 then
+        lateral_kill_impulse:scale( 10 / math.sqrt(v))
+    end
+    mycar.body:applyLinearImpulse(lateral_kill_impulse.x,lateral_kill_impulse.y)
+
+    -- reduce forward momentum
+
+    local forward_friction = vm.new(vel_front.x, vel_front.y)
+    forward_friction:scale(-0.8 * mycar.body:getMass() )
+    mycar.body:applyForce(forward_friction.x, forward_friction.y)
+
+    -- reduce angular momentum
+    mycar.body:applyAngularImpulse( -0.5 * mycar.body:getInertia() * mycar.body:getAngularVelocity() )
+    
 
 end
 

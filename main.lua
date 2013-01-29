@@ -12,6 +12,7 @@ require("car")
 -- Main Callbacks
 
 love.load = function()
+    love.graphics.setMode(1800, 1000, false, true, 0)
     love.physics.setMeter(64)
     world = love.physics.newWorld(0,0,false)
 
