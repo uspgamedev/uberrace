@@ -26,7 +26,9 @@ love.update = function(dt)
 end
 
 function love.draw()
+   
    love.graphics.translate(900,500)
+   love.graphics.scale(0.5, 0.5)
    --FUCKING POGS BRO
    track.draw(car.draw())
 end

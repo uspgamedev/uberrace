@@ -24,7 +24,7 @@ local turn = 0
 
 load = function(world)
     myball = {}
-    myball.body = lp.newBody(world,450,442,"dynamic")
+    myball.body = lp.newBody(world,450,450,"dynamic")
     myball.shape = lp.newCircleShape(17)
     myball.fixture = lp.newFixture(myball.body,myball.shape,2)
     mycar = {}

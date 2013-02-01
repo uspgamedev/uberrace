@@ -24,11 +24,6 @@ load = function(world)
 end
 
 function draw(ang, x, y)
-   print("ang "..ang)
-   print("x "..x)
-   print("y "..y)
-  
-   --
    lg.push()
    lg.rotate(-ang)
    lg.translate(-x,-y)
