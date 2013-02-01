@@ -153,10 +153,18 @@ end
 -- graphical
 
 draw = function()
-    lg.polygon("fill", mycar.body:getWorldPoints(mycar.shape:getPoints()))
+    points = {mycar.shape:getPoints()}
+
+    lg.push()
+    lg.translate(900,500)
+    --lg.rotate(mycar.body:getAngle())
+    
+    lg.polygon("fill",unpack(points))
+    lg.pop()
     local center = {}
-    center.x, center.y = myball.body:getWorldCenter()
-    lg.circle("line", center.x, center.y, myball.shape:getRadius())
+    center.x, center.y = 900, 500
+    return mycar.body:getAngle(), unpack{mycar.body:getWorldCenter()} 
+--    lg.circle("line", center.x, center.y, myball.shape:getRadius())
 end
     
 

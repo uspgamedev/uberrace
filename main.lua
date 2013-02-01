@@ -26,8 +26,7 @@ love.update = function(dt)
 end
 
 love.draw = function()
-    track.draw()
-    car.draw()
+    track.draw(car.draw())
 end
 
 -- Mouse Callbacks

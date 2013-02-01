@@ -32,6 +32,10 @@ function methods:norm2()
     return math.sqrt(self:norm2_squared())
 end
 
+function methods:unpack()
+   return self.x, self.y
+end
+
 meta = { __index = methods }
 
 function meta.new(xval,yval)
