@@ -156,7 +156,6 @@ draw = function()
     points = {mycar.shape:getPoints()}
 
     lg.push()
-    lg.translate(900,500)
     --lg.rotate(mycar.body:getAngle())
     
     lg.polygon("fill",unpack(points))

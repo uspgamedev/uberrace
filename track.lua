@@ -30,7 +30,6 @@ function draw(ang, x, y)
   
    --
    lg.push()
-   lg.translate(900,500)
    lg.rotate(-ang)
    lg.translate(-x,-y)
    lg.line(walls[1].shape:getPoints())

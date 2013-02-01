@@ -25,8 +25,10 @@ love.update = function(dt)
     car.update(dt)
 end
 
-love.draw = function()
-    track.draw(car.draw())
+function love.draw()
+   love.graphics.translate(900,500)
+   --FUCKING POGS BRO
+   track.draw(car.draw())
 end
 
 -- Mouse Callbacks
