@@ -23,15 +23,15 @@ local brake = false
 local turn = 0
 
 load = function(world)
-    myball = {}
-    myball.body = lp.newBody(world,450,450,"dynamic")
-    myball.shape = lp.newCircleShape(17)
-    myball.fixture = lp.newFixture(myball.body,myball.shape,2)
+    --myball = {}
+    --myball.body = lp.newBody(world,450,450,"dynamic")
+    --myball.shape = lp.newCircleShape(17)
+    --myball.fixture = lp.newFixture(myball.body,myball.shape,2)
     mycar = {}
     mycar.body = lp.newBody(world,450,450,"dynamic")
     mycar.shape = lp.newPolygonShape(10,20,-10,20,-10,-20,10,-20)
-    mycar.fixture = lp.newFixture(mycar.body,mycar.shape,2)
-    joint = lp.newWeldJoint(mycar.body,myball.body,450,450)
+    mycar.fixture = lp.newFixture(mycar.body,mycar.shape,3)
+    --joint = lp.newWeldJoint(mycar.body,myball.body,450,450)
     --mycar.body:setAngularDamping(10)
 end
 
