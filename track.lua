@@ -27,13 +27,9 @@ load = function(world)
     walls[2].fixture = lp.newFixture(walls[2].body,walls[2].shape)
 end
 
-function draw(ang, x, y)
-   lg.push()
-   lg.rotate(-ang)
-   lg.translate(-x,-y)
-   lg.line(walls[1].shape:getPoints())
-   lg.line(walls[2].shape:getPoints())
-   lg.pop()
+function draw()
+   lg.line(walls[1].body:getWorldPoints(walls[1].shape:getPoints()))
+   lg.line(walls[2].body:getWorldPoints(walls[2].shape:getPoints()))
 end
 
 

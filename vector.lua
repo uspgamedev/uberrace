@@ -32,6 +32,11 @@ function methods:norm2()
     return math.sqrt(self:norm2_squared())
 end
 
+function methods:add(vec)
+    self.x = self.x + vec.x
+	self.y = self.y + vec.y
+end
+
 function methods:unpack()
    return self.x, self.y
 end

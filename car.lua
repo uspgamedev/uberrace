@@ -151,20 +151,18 @@ keyreleased = function(key,unicode)
 end
 
 -- graphical
+ 
+camspot = function()
+    local wcenter = vm.new(mycar.body:getWorldCenter())
+	local wvel = vm.new(mycar.body:getLinearVelocity())
+	wvel:scale(0.3)
+	wcenter:add(wvel)
+    return mycar.body:getAngle(), wcenter:unpack() 
+end
 
 draw = function()
-    points = {mycar.shape:getPoints()}
-
-    lg.push()
-    --lg.rotate(mycar.body:getAngle())
-    
+    points = {mycar.body:getWorldPoints(mycar.shape:getPoints())}
     lg.polygon("fill",unpack(points))
-    lg.pop()
-    local center = {}
-    center.x, center.y = 900, 500
-    return mycar.body:getAngle(), unpack{mycar.body:getWorldCenter()} 
---    lg.circle("line", center.x, center.y, myball.shape:getRadius())
 end
-    
-
+   
 end -- module

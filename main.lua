@@ -29,8 +29,13 @@ function love.draw()
    
    love.graphics.translate(900,500)
    love.graphics.scale(0.5, 0.5)
-   --FUCKING POGS BRO
-   track.draw(car.draw())
+   local ang = 0
+   local wcenter = {}
+   ang, wcenter.x, wcenter.y = car.camspot()
+   love.graphics.rotate(-ang)
+   love.graphics.translate(-wcenter.x,-wcenter.y)
+   car.draw()
+   track.draw()
 end
 
 -- Mouse Callbacks
