@@ -152,7 +152,7 @@ end
 
 -- graphical
  
-camspot = function()
+getValues = function()
     local wcenter = vm.new(mycar.body:getWorldCenter())
 	local wvel = vm.new(mycar.body:getLinearVelocity())
 	wvel:scale(0.3)

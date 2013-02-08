@@ -4,6 +4,7 @@
 
 require("track")
 require("car")
+require("camera")
 
 ---------------
 -- CALLBACKS --
@@ -18,6 +19,7 @@ love.load = function()
 
     track.load(world)
     car.load(world)
+    camera.load(450,450,0)
 end
 
 love.update = function(dt)
@@ -27,15 +29,15 @@ end
 
 function love.draw()
    
-   love.graphics.translate(900,500)
-   love.graphics.scale(0.5, 0.5)
-   local ang = 0
-   local wcenter = {}
-   ang, wcenter.x, wcenter.y = car.camspot()
-   love.graphics.rotate(-ang)
-   love.graphics.translate(-wcenter.x,-wcenter.y)
-   car.draw()
-   track.draw()
+    love.graphics.translate(900,500)
+    love.graphics.scale(0.5, 0.5)
+    local ang = 0
+    local wcenter = {}
+    ang, wcenter.x, wcenter.y = camera.getCamSpot(car.getValues())
+    love.graphics.rotate(-ang)
+    love.graphics.translate(-wcenter.x,-wcenter.y)
+    car.draw()
+    track.draw()
 end
 
 -- Mouse Callbacks
