@@ -22,7 +22,7 @@ local accelerate = 0
 local brake = false
 local turn = 0
 
-load = function(world)
+function load(world)
     --myball = {}
     --myball.body = lp.newBody(world,450,450,"dynamic")
     --myball.shape = lp.newCircleShape(17)
