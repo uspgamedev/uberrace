@@ -37,7 +37,7 @@ end
 
 -- update
 
-update = function()
+function update()
     -- know the car
    
     local nright = { x = 1 , y = 0 }
@@ -120,7 +120,7 @@ end
 
 -- input
 
-keypressed = function(key,unicode)
+function keypressed(key,unicode)
     if key == "up" then
         accelerate = 1
     end
@@ -138,7 +138,7 @@ keypressed = function(key,unicode)
     end
 end
 
-keyreleased = function(key,unicode)
+function keyreleased(key,unicode)
     if key == "up" or key == "down" then
         accelerate = 0
     end
@@ -152,7 +152,7 @@ end
 
 -- graphical
  
-getValues = function()
+function getValues()
     local wcenter = vm.new(mycar.body:getWorldCenter())
 	local wvel = vm.new(mycar.body:getLinearVelocity())
 	wvel:scale(0.3)
@@ -160,7 +160,7 @@ getValues = function()
     return mycar.body:getAngle(), wcenter:unpack() 
 end
 
-draw = function()
+function draw()
     points = {mycar.body:getWorldPoints(mycar.shape:getPoints())}
     lg.polygon("fill",unpack(points))
 end
