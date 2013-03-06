@@ -14,33 +14,22 @@ end
 function getCamSpot(ang, x, y)
     local localmagicnumber = 70
     local angmagicnumber = 0.05
-    if math.abs(x - last.x) > localmagicnumber then
-       if x > last.x then
-	  last.x = last.x + localmagicnumber
-       else
-	  last.x = last.x - localmagicnumber
-       end
+--TODO: Verificar se travada enventual acontece so aqui
+    if x > last.x then
+        last.x = math.min(last.x + localmagicnumber, x)
     else
-       last.x = x
+        last.x = math.max(last.x - localmagicnumber, x)
     end
-    if math.abs(y - last.y) > localmagicnumber then
-       if y > last.y then
-	  last.y = last.y + localmagicnumber
-       else
-	  last.y = last.y - localmagicnumber
-       end
+    if y > last.y then
+        last.y = math.min(last.y + localmagicnumber, y)
     else
-       last.y = y
+        last.y = math.max(last.y - localmagicnumber, y)
     end
-    
-    if math.abs(ang - last.ang) > angmagicnumber then
-       if ang > last.ang then
-	  last.ang = last.ang + angmagicnumber
-       else
-	  last.ang = last.ang - angmagicnumber
-       end
+
+    if ang > last.ang then
+        last.ang = math.min(last.ang + angmagicnumber, ang)
     else
-       last.ang = ang
+        last.ang = math.max(last.ang - angmagicnumber, ang)
     end
     return last.ang, last.x, last.y
 end
