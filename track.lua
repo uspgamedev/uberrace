@@ -15,7 +15,7 @@ local print = print
 module("track") do
 
 
-load = function(world)
+function load(world)
     walls = {}
     walls[1] = {}
     walls[1].body = lp.newBody(world,0,0,"static")
