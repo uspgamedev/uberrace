@@ -5,7 +5,7 @@ module("camera")do
 
 local last = {}
 
-load = function(x, y, ang)
+function load(x, y, ang)
     last.x = x
     last.y = y
     last.ang = ang
