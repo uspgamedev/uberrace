@@ -12,7 +12,7 @@ require("camera")
 
 -- Main Callbacks
 
-love.load = function()
+function love.load()
     love.graphics.setMode(1800, 1000, false, true, 0)
     love.physics.setMeter(64)
     world = love.physics.newWorld(0,0,false)
@@ -22,7 +22,7 @@ love.load = function()
     camera.load(450,450,0)
 end
 
-love.update = function(dt)
+function love.update(dt)
     world:update(dt)
     car.update(dt)
 end
@@ -42,30 +42,30 @@ end
 
 -- Mouse Callbacks
 
-love.mousepressed = function(x,y,button)
+function love.mousepressed(x,y,button)
     
 end
 
-love.mousereleased = function(x,y,button)
+function love.mousereleased(x,y,button)
     
 end
 
 -- Keyboard Callbacks
 
-love.keypressed = function(key,unicode)
+function love.keypressed(key,unicode)
     car.keypressed(key,unicode)
 end
 
-love.keyreleased = function(key,unicode)
+function love.keyreleased(key,unicode)
     car.keyreleased(key,unicode)
 end
 
 -- Window Callbacks
 
-love.focus = function(f)
+function love.focus(f)
     
 end
 
-love.quit = function()
+function love.quit()
     
 end
